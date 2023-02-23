@@ -9,34 +9,34 @@ import java.util.Scanner;
 public class NotaGenerator {
     private static final Scanner input = new Scanner(System.in);
 
-    static void outln(Object x) {
+    static void outln(Object x) {                                               /* Shortcut untuk println statement   */
         System.out.println(x);
     }
 
-    static void outf(String format, Object... args) {
+    static void outf(String format, Object... args) {                           /* Shortcut untuk printf statement    */
         System.out.printf(format, args);
     }
 
-    static void out(Object x) {
+    static void out(Object x) {                                                 /* Shorcut untuk print statement      */
         System.out.print(x);
     }
 
     public static void main(String[] args) {
 
-        int pilihan;
+        int pilihan;                                                            /* Deklarasi variabel pilihan         */
 
-        mainloop: while (true) {
+        mainloop: while (true) {                                                /* Loop utama                         */
 
-            printMenu();
+            printMenu();                                                        /* Mengeprint menu                    */
             out("Pilihan : ");
 
             try {
-                pilihan = Integer.parseInt(input.nextLine());
+                pilihan = Integer.parseInt(input.nextLine());                   /* Input pilihan menu                 */
 
-                if (pilihan < 0 || pilihan > 2) {
+                if (pilihan < 0 || pilihan > 2) {                               /* Validasi input pilihan manu        */
                     throw new NumberFormatException();
                 }
-            } catch (NumberFormatException $) {
+            } catch (NumberFormatException $) {                                 /* Tangkap exception                  */
                 outln("Perintah tidak diketahui, silakan periksa kembali.");
                 continue;
             }
@@ -44,13 +44,13 @@ public class NotaGenerator {
             outln("================================");
 
             switch (pilihan) {
-                case 0 -> {
+                case 0 -> {                                                     /* Fungsi exit dari program           */
                     outln("Terima kasih telah menggunakan NotaGenerator!");
                     break mainloop;
                 }
                 case 1 -> {
-                    String[] namaHP = inputNamaHP();
-                    outf("ID Anda : %s\n", generateId(namaHP[0], namaHP[1]));
+                    String[] namaHP = inputNamaHP();                            /* Array string yang berisi nama dan  */
+                    outf("ID Anda : %s\n", generateId(namaHP[0], namaHP[1]));   /* nomor hp                           */
                 }
                 case 2 -> {
                     String[] namaHP = inputNamaHP();
@@ -60,16 +60,15 @@ public class NotaGenerator {
                     int berat;
 
                     outln("Masukkan tanggal terima:");
-                    tanggalTerima = input.nextLine();
+                    tanggalTerima = input.nextLine();                           /* Input tanggal terima tanpa validasi*/
 
                     do {
                         outln("Masukkan paket laundry:");
                         paket = input.nextLine();
 
-                        if (paket.equals("?"))
+                        if (paket.equals("?")) {                                /* Menampilkan bantuan                */
                             showPaket();
-
-                        else if (!paket.matches("(?i)reguler|fast|express")) {
+                        } else if (!paket.matches("(?i)reguler|fast|express")) {/* Validasi input paket               */
                             outf("Paket %s tidak diketahui\n", paket);
                             outln("[ketik ? untuk mencari tahu jenis paket]");
                         }
@@ -77,18 +76,18 @@ public class NotaGenerator {
                     } while (!paket.matches("(?i)reguler|fast|express"));
 
                     outln("Masukkan berat cucian Anda [Kg]:");
-                    while (true) {
+                    while (true) {                                              /* Input berat cucian                 */
                         try {
                             berat = Integer.parseInt(input.nextLine());
 
-                            if (berat <= 0) {
+                            if (berat <= 0) {                                   /* jika negatif                       */
                                 throw new NumberFormatException();
-                            } else if (berat == 1 && berat++ == 1) {
+                            } else if (berat == 1 && ++berat == 1) {            /* jika < 2, pake lazy evaluation     */
                                 outln("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
                             }
                             break;
 
-                        } catch (NumberFormatException $) {
+                        } catch (NumberFormatException $) {                     /* Validasi angka di input            */
                             outln("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
                         }
                     }
@@ -101,7 +100,7 @@ public class NotaGenerator {
         }
     }
 
-    private static void printMenu() {
+    private static void printMenu() {                                           /* Mencetak menu                      */
         outln("Selamat datang di NotaGenerator!");
         outln("==============Menu==============");
         outln("[1] Generate ID");
@@ -109,7 +108,7 @@ public class NotaGenerator {
         outln("[0] Exit");
     }
 
-    private static void showPaket() {
+    private static void showPaket() {                                           /* Mencetak bantuan paket             */
         outln("+-------------Paket-------------+");
         outln("| Express | 1 Hari | 12000 / Kg |");
         outln("| Fast    | 2 Hari | 10000 / Kg |");
@@ -125,14 +124,14 @@ public class NotaGenerator {
 
         outln("Masukkan nomor handphone Anda:");
 
-        do {
+        do {                                                                    /* Input nomor hp                     */
             hp = input.nextLine();
 
             if (!hp.matches("[0-9]+")) {
                 outln("Nomor hp hanya menerima digit");
             }
 
-        } while (!hp.matches("[0-9]+"));
+        } while (!hp.matches("[0-9]+"));                                        /* Validasi input nomor hp            */
 
         String[] result = { nama, hp };
         return result;
@@ -143,39 +142,33 @@ public class NotaGenerator {
         int checkSum = 0;
         String firstName = "";
 
-        for (char c : nama.toCharArray()) {
-
-            if (c == ' ') {
-                break;
-            }
-
-            firstName += ("" + c).toUpperCase();
-
+        for (int i = 0; i < nama.length() && nama.charAt(i) != ' '; i++) {      /* Mengambil nama pertama dari nama   */
+            firstName += (char) (nama.charAt(i) & ~32);
         }
 
-        for (char c : (firstName + '-' + nomorHP).toCharArray()) {
+        for (char c : (firstName + '-' + nomorHP).toCharArray()) {              /* Menghitung checksum                */
             switch (c) {
-                case
+                case                                                            /* Kasus karakter huruf               */
                     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
                     'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
                     'Y', 'Z' -> checkSum += (c - 'A') + 1;
-                case
+                case                                                            /* Kasus karakter angka               */
                     '0', '1', '2', '3', '4',
                     '5', '6', '7', '8', '9' -> checkSum += c - '0';
-                default -> checkSum += 7;
+                default -> checkSum += 7;                                       /* Selain huruf atau angka            */
             }
         }
 
-        return "%s-%s-%02d".formatted(firstName, nomorHP, checkSum);
+        return "%s-%s-%02d".formatted(firstName, nomorHP, checkSum);            /* Return string terformat            */
     }
 
     public static String generateNota(String id, String paket, int berat, String tanggalTerima) {
 
-        SimpleDateFormat formatOne = new SimpleDateFormat("dd/mm/yyyy");
-        SimpleDateFormat formatTwo = new SimpleDateFormat("yyyy-mm-dd");
-        String result = "ID    : %s\n".formatted(id);
-        String tanggalSelesai;
-        Date terima, selesai;
+        SimpleDateFormat formatOne = new SimpleDateFormat("dd/mm/yyyy");        /* format tanggal untuk string        */
+        SimpleDateFormat formatTwo = new SimpleDateFormat("yyyy-mm-dd");        /* format tanggal untuk di-parse      */
+        String result = "ID    : %s\n".formatted(id);                           /* Memulai pemformattan output        */
+        String tanggalSelesai;                                                  /* String tanggal selesai terformat   */
+        Date terima, selesai;                                                   /* Object Date yang bisa di format    */
 
         try {
             terima = formatOne.parse(tanggalTerima);
@@ -183,11 +176,11 @@ public class NotaGenerator {
             return null;
         }
 
-        result += "Paket : %s\n".formatted(paket.toLowerCase());
-        tanggalTerima = formatTwo.format(terima);
+        result += "Paket : %s\n".formatted(paket.toLowerCase());                /* mMnambah jenis paket               */
+        tanggalTerima = formatTwo.format(terima);                               /* Format string tanggal agar di parse*/
 
         switch (paket.toLowerCase()) {
-            case "express" -> {
+            case "express" -> {                                                 /* pilihan paket express              */
                 result += "Harga :\n%d kg x 12000 = %d\n"
                         .formatted(berat, berat * 12000);
                 tanggalSelesai = LocalDate
@@ -195,7 +188,7 @@ public class NotaGenerator {
                         .plusDays(1)
                         .toString();
             }
-            case "fast" -> {
+            case "fast" -> {                                                    /* pilihan paket fast                 */
                 result += "Harga :\n%d kg x 10000 = %d\n"
                         .formatted(berat, berat * 10000);
                 tanggalSelesai = LocalDate
@@ -203,7 +196,7 @@ public class NotaGenerator {
                         .plusDays(2)
                         .toString();
             }
-            case "reguler" -> {
+            case "reguler" -> {                                                 /* pilihan paket reguler              */
                 result += "Harga :\n%d kg x 7000 = %d\n"
                         .formatted(berat, berat * 7000);
                 tanggalSelesai = LocalDate
@@ -211,11 +204,11 @@ public class NotaGenerator {
                         .plusDays(3)
                         .toString();
             }
-            default -> tanggalSelesai = "IMPOSSIBLE";
-        }
+            default -> tanggalSelesai = "IMPOSSIBLE";                           /* Kasus tak mungkin terjadi karena   */
+        }                                                                       /* input dijamin valid                */
 
         try {
-            selesai = formatTwo.parse(tanggalSelesai);
+            selesai = formatTwo.parse(tanggalSelesai);                          /* Format tanggal selesai             */
         } catch (ParseException $) {
             return null;
         }
@@ -223,6 +216,6 @@ public class NotaGenerator {
         result += "Tanggal Terima  : %s\n".formatted(formatOne.format(terima));
         result += "Tanggal Selesai : %s".formatted(formatOne.format(selesai));
 
-        return result;
+        return result;                                                          /* Mereturn string yang sudah diformat*/
     }
 }
