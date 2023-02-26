@@ -159,7 +159,7 @@ public class NotaGenerator {
             }
         }
 
-        return "%s-%s-%02d".formatted(firstName, nomorHP, checkSum);            /* Return string terformat            */
+        return "%s-%s-%02d".formatted(firstName, nomorHP, checkSum % 100);      /* Return string terformat            */
     }
 
     public static String generateNota(String id, String paket, int berat, String tanggalTerima) {
