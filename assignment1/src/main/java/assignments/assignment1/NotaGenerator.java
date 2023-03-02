@@ -143,7 +143,7 @@ public class NotaGenerator {
         String firstName = "";
 
         for (int i = 0; i < nama.length() && nama.charAt(i) != ' '; i++) {      /* Mengambil nama pertama dari nama   */
-            firstName += (char) (nama.charAt(i) & ~32);
+            firstName += (nama.charAt(i) + "").toUpperCase();
         }
 
         for (char c : (firstName + '-' + nomorHP).toCharArray()) {              /* Menghitung checksum                */
