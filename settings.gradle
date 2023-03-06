@@ -1,3 +1,2 @@
 rootProject.name = 'assignments'
 include 'assignment1'
-include 'assignment2'

@@ -12,7 +12,6 @@ Semester Genap 2022/2023
 
 1. Soal Tugas Pemrograman
    * [Tugas Pemrograman 1][tp1]
-   * [Tugas Pemrograman 2][tp2]
 2. [Latihan Tugas Pemrograman](#latihan-tugas-pemrograman)
 3. [Memulai](#memulai)
 4. [Mengerjakan Tugas Pemrograman](#mengerjakan-tugas-pemrograman)
