@@ -9,15 +9,15 @@ import java.util.Scanner;
 public class NotaGenerator {
     private static final Scanner input = new Scanner(System.in);
 
-    static void outln(Object x) {                                               /* Shortcut untuk println statement   */
+    public static void outln(Object x) {                                               /* Shortcut untuk println statement   */
         System.out.println(x);
     }
 
-    static void outf(String format, Object... args) {                           /* Shortcut untuk printf statement    */
+    public static void outf(String format, Object... args) {                           /* Shortcut untuk printf statement    */
         System.out.printf(format, args);
     }
 
-    static void out(Object x) {                                                 /* Shorcut untuk print statement      */
+    public static void out(Object x) {                                                 /* Shorcut untuk print statement      */
         System.out.print(x);
     }
 
@@ -56,41 +56,13 @@ public class NotaGenerator {
                     String[] namaHP = inputNamaHP();
                     String id = generateId(namaHP[0], namaHP[1]);
 
-                    String paket, tanggalTerima;
-                    int berat;
+                    String[] paketBerat = inputPaketBerat();
+
+                    String paket = paketBerat[0], tanggalTerima;
+                    int berat = Integer.parseInt(paketBerat[1]);
 
                     outln("Masukkan tanggal terima:");
                     tanggalTerima = input.nextLine();                           /* Input tanggal terima tanpa validasi*/
-
-                    do {
-                        outln("Masukkan paket laundry:");
-                        paket = input.nextLine();
-
-                        if (paket.equals("?")) {                                /* Menampilkan bantuan                */
-                            showPaket();
-                        } else if (!paket.matches("(?i)reguler|fast|express")) {/* Validasi input paket               */
-                            outf("Paket %s tidak diketahui\n", paket);
-                            outln("[ketik ? untuk mencari tahu jenis paket]");
-                        }
-
-                    } while (!paket.matches("(?i)reguler|fast|express"));
-
-                    outln("Masukkan berat cucian Anda [Kg]:");
-                    while (true) {                                              /* Input berat cucian                 */
-                        try {
-                            berat = Integer.parseInt(input.nextLine());
-
-                            if (berat <= 0) {                                   /* jika negatif                       */
-                                throw new NumberFormatException();
-                            } else if (berat == 1 && ++berat == 1) {            /* jika < 2, pake lazy evaluation     */
-                                outln("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-                            }
-                            break;
-
-                        } catch (NumberFormatException $) {                     /* Validasi angka di input            */
-                            outln("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
-                        }
-                    }
 
                     outf("Nota Laundry\n%s\n",
                         generateNota(id, paket, berat, tanggalTerima)
@@ -116,7 +88,7 @@ public class NotaGenerator {
         outln("+-------------------------------+");
     }
 
-    private static String[] inputNamaHP() {
+    public static String[] inputNamaHP() {
         String nama, hp;
 
         outln("Masukkan nama Anda:");
@@ -134,6 +106,45 @@ public class NotaGenerator {
         } while (!hp.matches("[0-9]+"));                                        /* Validasi input nomor hp            */
 
         String[] result = { nama, hp };
+        return result;
+    }
+
+    public static String[] inputPaketBerat() {
+
+        String paket;
+        int berat;
+
+        do {
+            outln("Masukkan paket laundry:");
+            paket = input.nextLine();
+
+            if (paket.equals("?")) {                                            /* Menampilkan bantuan                */
+                showPaket();
+            } else if (!paket.matches("(?i)reguler|fast|express")) {            /* Validasi input paket               */
+                outf("Paket %s tidak diketahui\n", paket);
+                outln("[ketik ? untuk mencari tahu jenis paket]");
+            }
+
+        } while (!paket.matches("(?i)reguler|fast|express"));
+
+        outln("Masukkan berat cucian Anda [Kg]:");
+        while (true) {                                                          /* Input berat cucian                 */
+            try {
+                berat = Integer.parseInt(input.nextLine());
+
+                if (berat <= 0) {                                               /* jika negatif                       */
+                    throw new NumberFormatException();
+                } else if (berat == 1 && ++berat == 1) {                        /* jika < 2, pake lazy evaluation     */
+                    outln("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+                }
+                break;
+
+            } catch (NumberFormatException $) {                                 /* Validasi angka di input            */
+                outln("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+            }
+        }
+
+        String[] result = { paket, Integer.toString(berat) };
         return result;
     }
 
