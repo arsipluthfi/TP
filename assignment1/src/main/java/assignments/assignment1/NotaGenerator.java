@@ -134,7 +134,7 @@ public class NotaGenerator {
 
                 if (berat <= 0) {                                               /* jika negatif                       */
                     throw new NumberFormatException();
-                } else if (berat == 1 && ++berat == 1) {                        /* jika < 2, pake lazy evaluation     */
+                } else if (berat == 1 && ++berat == 2) {                        /* jika < 2, pake lazy evaluation     */
                     outln("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
                 }
                 break;

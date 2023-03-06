@@ -56,7 +56,18 @@ public class MainMenu {
     }
 
     private static void handleGenerateNota() {
-        String[] beratString = inputPaketBerat();
+
+        outln("Masukan ID member:");
+        String id = input.nextLine();                                           /* Input id                           */
+
+        if (Member.find(memberList, id) == null) {
+            outf("Member dengan ID %s tidak ditemukan!\n", id);
+            return;
+        }
+
+        String[] paketBerat = inputPaketBerat();
+        String paket = paketBerat[0];
+        int berat = Integer.parseInt(paketBerat[1]);
     }
 
     private static void handleListNota() {

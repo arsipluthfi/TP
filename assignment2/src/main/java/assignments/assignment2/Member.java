@@ -70,4 +70,10 @@ public class Member {
         return false;                                                           /* else */
     }
 
+    static Member find(Member[] array, String id) {
+        if (array == null) return null;
+        for (Member m: array) if (m.getID().equals(id)) return m;
+        return null;
+    }
+
 }
