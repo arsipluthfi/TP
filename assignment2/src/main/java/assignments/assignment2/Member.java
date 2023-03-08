@@ -4,8 +4,8 @@ import assignments.assignment1.NotaGenerator;
 
 public class Member {
 
-    private String nama, noHp, id;
-    public int bonusCounter;
+    final private String nama, noHp, id;
+    private int bonusCounter;
 
     public Member(String nama, String noHp) {
         this.nama = nama;
@@ -23,6 +23,14 @@ public class Member {
 
     public String getID() {
         return this.id;
+    }
+
+    public int getBonus() {
+        return this.bonusCounter;
+    }
+
+    public void incrementBonus() {
+        this.bonusCounter = this.bonusCounter > 3 ? 0 : ++this.bonusCounter;
     }
 
     public Member[] appendTo(Member[] array) {                                  /* Efficient dynamic array            */
@@ -45,20 +53,6 @@ public class Member {
         return newArray;
     }
 
-    public Member[] popFrom(Member[] array) {                                   /* Method menghapus object this       */
-
-        Member[] newArray = new Member[array.length];
-        int idx = 0;
-
-        if (array.length > 2 && array[array.length / 2 + 1] == null) {
-            newArray = new Member[array.length / 2];                            /* Create new array half the size     */
-        }
-
-        for (Member m: array) if (m != this) newArray[idx++] = m;               /* Adding all other elements          */
-
-        return newArray;
-    }
-
     public boolean isIn(Member[] array) {                                       /* Validasi array                     */
         for (Member m: array) {
             if (
@@ -67,10 +61,14 @@ public class Member {
             ) return true;
         }
 
-        return false;                                                           /* else */
+        return false;                                                           /* else                               */
     }
 
-    static Member find(Member[] array, String id) {
+    public String toString() {
+        return "- %s : %s".formatted(this.id, this.nama);
+    }
+
+    public static Member find(Member[] array, String id) {
         if (array == null) return null;
         for (Member m: array) if (m.getID().equals(id)) return m;
         return null;

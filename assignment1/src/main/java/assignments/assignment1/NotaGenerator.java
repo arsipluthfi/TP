@@ -229,4 +229,79 @@ public class NotaGenerator {
 
         return result;                                                          /* Mereturn string yang sudah diformat*/
     }
+
+        public static String generateNota(String id, String paket, int berat, String tanggalTerima, int diskon) {
+
+        SimpleDateFormat formatOne = new SimpleDateFormat("dd/mm/yyyy");        /* format tanggal untuk string        */
+        SimpleDateFormat formatTwo = new SimpleDateFormat("yyyy-mm-dd");        /* format tanggal untuk di-parse      */
+        String result = "ID    : %s\n".formatted(id);                           /* Memulai pemformattan output        */
+        String tanggalSelesai;                                                  /* String tanggal selesai terformat   */
+        Date terima, selesai;                                                   /* Object Date yang bisa di format    */
+
+        try {
+            terima = formatOne.parse(tanggalTerima);
+        } catch (ParseException $) {
+            return null;
+        }
+
+        result += "Paket : %s\n".formatted(paket.toLowerCase());                /* mMnambah jenis paket               */
+        tanggalTerima = formatTwo.format(terima);                               /* Format string tanggal agar di parse*/
+
+        switch (paket.toLowerCase()) {
+            case "express" -> {                                                 /* pilihan paket express              */
+                result += "Harga :\n%d kg x 12000 = %d%s"
+                        .formatted(
+                            berat,
+                            berat * 12000,
+                            diskon == 2 ?
+                            " = %d ((Discount member 50%%!!!))\n"
+                            .formatted(berat * 12000 / diskon) : "\n"
+                        );
+                tanggalSelesai = LocalDate
+                        .parse(tanggalTerima)
+                        .plusDays(1)
+                        .toString();
+            }
+            case "fast" -> {                                                    /* pilihan paket fast                 */
+                result += "Harga :\n%d kg x 10000 = %d%s"
+                        .formatted(
+                            berat,
+                            berat * 10000,
+                            diskon == 2 ?
+                            " = %d ((Discount member 50%%!!!))\n"
+                            .formatted(berat * 10000 / diskon) : "\n"
+                        );
+                tanggalSelesai = LocalDate
+                        .parse(tanggalTerima)
+                        .plusDays(2)
+                        .toString();
+            }
+            case "reguler" -> {                                                 /* pilihan paket reguler              */
+                result += "Harga :\n%d kg x 7000 = %d%s"
+                        .formatted(
+                            berat,
+                            berat * 7000,
+                            diskon == 2 ?
+                            " = %d ((Discount member 50%%!!!))\n"
+                            .formatted(berat * 7000 / diskon) : "\n"
+                        );
+                tanggalSelesai = LocalDate
+                        .parse(tanggalTerima)
+                        .plusDays(3)
+                        .toString();
+            }
+            default -> tanggalSelesai = "IMPOSSIBLE";                           /* Kasus tak mungkin terjadi karena   */
+        }                                                                       /* input dijamin valid                */
+
+        try {
+            selesai = formatTwo.parse(tanggalSelesai);                          /* Format tanggal selesai             */
+        } catch (ParseException $) {
+            return null;
+        }
+
+        result += "Tanggal Terima  : %s\n".formatted(formatOne.format(terima));
+        result += "Tanggal Selesai : %s".formatted(formatOne.format(selesai));
+
+        return result;                                                          /* Mereturn string yang sudah diformat*/
+    }
 }
