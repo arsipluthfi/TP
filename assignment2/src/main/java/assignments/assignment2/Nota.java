@@ -4,9 +4,9 @@ import assignments.assignment1.NotaGenerator;
 
 public class Nota {
 
-    static public int notaCounter;
+    static public int notaCounter;                                              /* Menghitung semua nota yang dibuat  */
 
-    final private int idNota, berat;
+    final private int idNota, berat;                                            /* Field private untuk semua instance */
     final private String paket, tanggalMasuk, idMember;
     final private Member member;
 
@@ -36,8 +36,8 @@ public class Nota {
         return this.idNota;
     }
 
-    public void decrementSisa() {
-        isReady = (sisaHariPengerjaan == 0 ? 0 : --sisaHariPengerjaan) == 0;
+    public void decrementSisa() {                                               /* Decrement sisa hari dan update     */
+        isReady = (sisaHariPengerjaan == 0 ? 0 : --sisaHariPengerjaan) == 0;    /* isReady                            */
     }
 
     public String toVerboseString() {
