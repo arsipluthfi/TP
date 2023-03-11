@@ -97,10 +97,9 @@ public class Nota {
         return newArray;
     }
 
-    public static Nota find(Nota[] array, int id) {
-        if (array == null) return null;
-        for (Nota n: array) if (n != null && n.getID() == id) return n;
-        return null;
+    @Override
+    public boolean equals(Object value) {
+        return this.idNota == (int) value;
     }
 
 }

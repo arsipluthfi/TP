@@ -2,18 +2,18 @@ package assignments.assignment2;
 
 import assignments.assignment1.NotaGenerator;
 
-public class Member {
+public class Member {                                                           /* Representasi sebuah member         */
 
-    final private String nama, noHp, id;
+    final private String nama, noHp, id;                                        /* Field yang tidak bisa diubah       */
     private int bonusCounter;
 
-    public Member(String nama, String noHp) {
+    public Member(String nama, String noHp) {                                   /* Contrusctor sesuai ketenruan       */
         this.nama = nama;
         this.noHp = noHp;
         this.id = NotaGenerator.generateId(this.nama, this.noHp);
     }
 
-    public String getNama() {
+    public String getNama() {                                                   /* Beberapa getter dan setter         */
         return this.nama;
     };
 
@@ -29,15 +29,15 @@ public class Member {
         return this.bonusCounter;
     }
 
-    public void incrementBonus() {
+    public void incrementBonus() {                                              /* Setter bonus untuk diskon          */
         this.bonusCounter = this.bonusCounter > 3 ? 0 : ++this.bonusCounter;
     }
 
     public Member[] appendTo(Member[] array) {                                  /* Efficient dynamic array            */
 
-        if (array == null) array = new Member[1];
+        if (array == null) array = new Member[1];                               /* Jika array belum diinisialisasi    */
 
-        Member[] newArray = new Member[array.length];
+        Member[] newArray = new Member[array.length];                           /* Membuat array baru                 */
         int idx;
 
         if (array[array.length - 1] != null) {                                  /* Kalau sudah penuh                  */
@@ -54,7 +54,7 @@ public class Member {
     }
 
     public boolean isIn(Member[] array) {                                       /* Validasi array                     */
-        for (Member m: array) {
+        for (Member m: array) {                                                 /* Mengecek apkah member ada di array */
             if (
                 this.nama.equals(m.getNama()) &&
                 this.noHp.equals(m.getNoHP())
@@ -64,14 +64,13 @@ public class Member {
         return false;                                                           /* else                               */
     }
 
-    public String toString() {
+    public String toString() {                                                  /* Representasi string member         */
         return "- %s : %s".formatted(this.id, this.nama);
     }
 
-    public static Member find(Member[] array, String id) {
-        if (array == null) return null;
-        for (Member m: array) if (m.getID().equals(id)) return m;
-        return null;
+    @Override
+    public boolean equals(Object value) {                                       /* Overriding equals methos           */
+        return this.id.equals((String) value);
     }
 
 }
