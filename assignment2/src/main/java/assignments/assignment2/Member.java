@@ -54,12 +54,7 @@ public class Member {                                                           
     }
 
     public boolean isIn(Member[] array) {                                       /* Validasi array                     */
-        for (Member m: array) {                                                 /* Mengecek apkah member ada di array */
-            if (
-                this.nama.equals(m.getNama()) &&
-                this.noHp.equals(m.getNoHP())
-            ) return true;
-        }
+        for (Member m: array) if (this.id.equals(m.getID())) return true;       /* Mengecek apkah member ada di array */
 
         return false;                                                           /* else                               */
     }

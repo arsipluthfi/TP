@@ -130,12 +130,12 @@ public class MainMenu {
         Nota nota = MainMenu.<Nota, Integer>find(notaList, Integer.parseInt(id));/* Mmencari nota dalam list nota     */
 
         if (nota == null) {
-            outf("Nota dengan ID %s tidak ditemukan!", id);
+            outf("Nota dengan ID %s tidak ditemukan!\n", id);
         } else if (nota.getIsReady()) {
-            outf("Nota dengan ID %s berhasil diambil!", id);
+            outf("Nota dengan ID %s berhasil diambil!\n", id);
             notaList = nota.popFrom(notaList);
         } else {
-            outf("Nota dengan ID %s gagal diambil!", id);
+            outf("Nota dengan ID %s gagal diambil!\n", id);
         }
 
     }
@@ -144,6 +144,7 @@ public class MainMenu {
         cal.add(Calendar.DATE, 1);                                              /* Increment tanggal                  */
         outln("Dek Depe tidur hari ini... zzz...");
 
+        if (notaList != null)
         for (Nota n: notaList) if (n != null) {
             n.decrementSisa();
 
