@@ -13,7 +13,7 @@ public class Nota {
     private boolean isReady;
     private int sisaHariPengerjaan;
 
-    public Nota(Member member, String paket, int berat, String tanggalMasuk) {
+    public Nota(Member member, String paket, int berat, String tanggalMasuk) {  /* Constructor sesuai soal            */
         this.idNota = notaCounter++;
         this.member = member;
         this.berat = berat;
@@ -40,7 +40,7 @@ public class Nota {
         isReady = (sisaHariPengerjaan == 0 ? 0 : --sisaHariPengerjaan) == 0;    /* isReady                            */
     }
 
-    public String toVerboseString() {
+    public String toVerboseString() {                                           /* Full string nota                   */
         return NotaGenerator.generateNota(
             idMember,
             paket,
