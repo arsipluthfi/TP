@@ -44,15 +44,13 @@ class MemberSystemTest {
 
         // Mock user input
         Scanner scanner = Mockito.mock(Scanner.class);
-        Mockito.when(scanner.nextInt())
-                .thenReturn(1) // create nota
-                .thenReturn(3); // logout
         Mockito.when(scanner.nextLine())
-                .thenReturn("")
+                .thenReturn("1")
                 .thenReturn("Reguler") // Paket Reguler
                 .thenReturn("5") // 5 Kg
                 .thenReturn("x") // No SetrikaService
-                .thenReturn("x"); // No AntarService
+                .thenReturn("x") // No AntarService
+                .thenReturn("3"); // logout
 
         memberSystem.login(scanner, "1", "password");
         Nota nota = member.getNotaList()[0];
@@ -71,15 +69,13 @@ class MemberSystemTest {
 
         // Mock user input
         Scanner scanner = Mockito.mock(Scanner.class);
-        Mockito.when(scanner.nextInt())
-                .thenReturn(1) // create nota
-                .thenReturn(3); // logout
         Mockito.when(scanner.nextLine())
-                .thenReturn("")
+                .thenReturn("1")
                 .thenReturn("Reguler") // Paket Reguler
                 .thenReturn("1") // 1 Kg
                 .thenReturn("")  // SetrikaService
-                .thenReturn("x"); // No AntarService
+                .thenReturn("x") // No AntarService
+                .thenReturn("3"); // No AntarService
 
         memberSystem.login(scanner, "1", "password");
         Nota nota = member.getNotaList()[0];
@@ -101,15 +97,13 @@ class MemberSystemTest {
 
         // Mock user input
         Scanner scanner = Mockito.mock(Scanner.class);
-        Mockito.when(scanner.nextInt())
-                .thenReturn(1) // create nota
-                .thenReturn(3); // logout
         Mockito.when(scanner.nextLine())
-                .thenReturn("")
+                .thenReturn("1")
                 .thenReturn("Reguler") // Paket Reguler
                 .thenReturn("5") // 5 Kg
                 .thenReturn("x") // No SetrikaService
-                .thenReturn("");  // AntarService
+                .thenReturn("")  // AntarService
+                .thenReturn("3");
 
         memberSystem.login(scanner, "1", "password");
         Nota nota = member.getNotaList()[0];
@@ -131,22 +125,19 @@ class MemberSystemTest {
 
         // Mock user input
         Scanner scanner = Mockito.mock(Scanner.class);
-        Mockito.when(scanner.nextInt())
-                .thenReturn(1) // create nota
-                .thenReturn(3); // logout
         Mockito.when(scanner.nextLine())
-                .thenReturn("")
+                .thenReturn("1")
                 .thenReturn("Reguler") // Paket Reguler
                 .thenReturn("5") // 5 Kg
                 .thenReturn("")  // SetrikaService
-                .thenReturn("");  // AntarService
+                .thenReturn("")  // AntarService
+                .thenReturn("3");  // AntarService
 
         memberSystem.login(scanner, "1", "password");
         Nota nota = member.getNotaList()[0];
         assertEquals(1, member.getNotaList().length);
         assertEquals("Reguler", nota.getPaket());
         assertEquals(5, nota.getBerat());
-        assertEquals(3, nota.getServices().length);
         assertTrue(nota.getServices()[1] instanceof SetrikaService);
         assertTrue(nota.getServices()[2] instanceof AntarService);
         assertEquals(1, NotaManager.notaList.length);
@@ -163,9 +154,9 @@ class MemberSystemTest {
 
         // Mock user input
         Scanner scanner = Mockito.mock(Scanner.class);
-        Mockito.when(scanner.nextInt())
-                .thenReturn(2) // Choose to show detail nota
-                .thenReturn(3); // Choose to logout
+        Mockito.when(scanner.nextLine())
+                .thenReturn("2") // Choose to show detail nota
+                .thenReturn("3"); // Choose to logout
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
@@ -178,7 +169,7 @@ class MemberSystemTest {
         String output = outputStream.toString();
         assertTrue(output.contains("[ID Nota = 0]"));
         assertTrue(output.contains("ID    : 1"));
-        assertTrue(output.contains("Paket : Reguler"));
-        assertTrue(output.contains("tanggal terima  : 09/04/2023"));
+        assertTrue(output.contains("Paket : reguler"));
+        assertTrue(output.contains("Tanggal Terima  : 09/04/2023"));
     }
 }

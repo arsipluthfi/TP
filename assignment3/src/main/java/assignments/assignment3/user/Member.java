@@ -1,11 +1,33 @@
 package assignments.assignment3.user;
 
+/*====================================***=====================================*\
+|---------------------------------- IMPORTS -----------------------------------|
+\*============================================================================*/
+
 import assignments.assignment3.nota.Nota;
+
+/*========================================================***=========================================================*\
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+
+|------------------------------------------------------- CLASS -------------------------------------------------------|
+
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+\*====================================================================================================================*/
+
 public class Member {
+
+/*====================================***=====================================*\
+|---------------------------------- FIELDS ------------------------------------|
+\*============================================================================*/
+
     protected String id;
     protected String password;
     protected String nama;
-    protected Nota[] notaList = new Nota[0];
+    protected Nota[] notaList = new Nota[1];
+
+/*====================================***=====================================*\
+|--------------------------------- CONSTRUCTOR --------------------------------|
+\*============================================================================*/
 
     public Member(String nama, String id, String password) {
         this.nama = nama;
@@ -13,38 +35,9 @@ public class Member {
         this.password = password;
     }
 
-    /**
-     * Method otentikasi member dengan ID dan password yang diberikan.
-     *
-     * @param id -> ID anggota yang akan diautentikasi.
-     * @param password -> password anggota untuk mengautentikasi.
-     * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
-     */
-    public boolean login(String id, String password) {
-        return id.equals(this.id) && authenticate(password);
-    }
-
-    /**
-     * Menambahkan nota baru ke NotaList instance member.
-     *
-     * @param nota Nota object untuk ditambahkan.
-     */
-    public void addNota(Nota nota) {
-        // TODO
-    }
-
-    /**
-     * Method otentikasi member dengan password yang diberikan.
-     *
-     * @param password -> sandi password anggota untuk mengautentikasi.
-     * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
-     */
-    protected boolean authenticate(String password) {
-        // TODO
-        return false;
-    }
-
-    // Dibawah ini adalah getter
+/*====================================***=====================================*\
+|------------------------------- HELPER METHODS -------------------------------|
+\*============================================================================*/
 
     public String getNama() {
         return nama;
@@ -56,5 +49,36 @@ public class Member {
 
     public Nota[] getNotaList() {
         return notaList;
+    }
+
+/*====================================***=====================================*\
+|-------------------------------- FUNCTIONALITY -------------------------------|
+\*============================================================================*/
+
+    public boolean login(String id, String password) {
+        return id.equals(this.id) && authenticate(password);
+    }
+
+    public void addNota(Nota nota) {
+        Nota[] newArray;
+        int idx;
+
+        if (notaList[notaList.length - 1] != null) {                            /* Kalau sudah penuh                  */
+            newArray = new Nota[notaList.length * 2];                           /* Create new array twice the size */
+        } else {
+            newArray = new Nota[notaList.length];
+        }
+
+        for (idx = 0; idx < notaList.length; idx++) {                           /* Copy arrays                        */
+            if (notaList[idx] == null) break;
+            newArray[idx] = notaList[idx];                                      /* Inserting values                   */
+        }
+
+        newArray[idx] = nota;                                                   /* Adding the new element             */
+        notaList = newArray;
+    }
+
+    protected boolean authenticate(String password) {
+        return this.password.equals(password);
     }
 }

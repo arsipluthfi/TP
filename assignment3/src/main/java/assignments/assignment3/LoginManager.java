@@ -1,46 +1,58 @@
 package assignments.assignment3;
 
-import assignments.assignment1.NotaGenerator;
+/*====================================***=====================================*\
+|---------------------------------- IMPORTS -----------------------------------|
+\*============================================================================*/
+
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment3.user.menu.SystemCLI;
 
+import static assignments.assignment1.NotaGenerator.generateId;
+
+/*========================================================***=========================================================*\
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+
+|------------------------------------------------------- CLASS -------------------------------------------------------|
+
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+\*====================================================================================================================*/
+
 public class LoginManager {
+
+/*====================================***=====================================*\
+|---------------------------------- FIELDS ------------------------------------|
+\*============================================================================*/
+
     private final EmployeeSystem employeeSystem;
     private final MemberSystem memberSystem;
 
-    public LoginManager(EmployeeSystem employeeSystem, MemberSystem memberSystem) {
-        this.employeeSystem = employeeSystem;
-        this.memberSystem = memberSystem;
+/*====================================***=====================================*\
+|--------------------------------- CONSTRUCTOR --------------------------------|
+\*============================================================================*/
+
+    public LoginManager(EmployeeSystem employeeSys, MemberSystem memberSys) {
+        this.employeeSystem = employeeSys;
+        this.memberSystem = memberSys;
     }
 
-    /**
-     * Method mapping dari ke SystemCLI yang sesuai.
-     *
-     * @param id -> ID dari user yang akan menggunakan SystemCLI
-     * @return SystemCLI object yang sesuai dengan ID, null if  ID tidak ditemukan.
-     */
+/*====================================***=====================================*\
+|-------------------------------- FUNCTIONALITY -------------------------------|
+\*============================================================================*/
+
     public SystemCLI getSystem(String id){
-        if(memberSystem.isMemberExist(id)){
-            return memberSystem;
-        }
-        if(employeeSystem.isMemberExist(id)){
-            return employeeSystem;
-        }
+        if(memberSystem.isMemberExist(id)) return memberSystem;
+
+        if(employeeSystem.isMemberExist(id)) return employeeSystem;
+
         return null;
     }
 
-    /**
-     * Mendaftarkan member baru dengan informasi yang diberikan.
-     *
-     * @param nama -> Nama member.
-     * @param noHp -> Nomor handphone member.
-     * @param password -> Password akun member.
-     * @return Member object yang berhasil mendaftar, return null jika gagal mendaftar.
-     */
     public Member register(String nama, String noHp, String password) {
-        // TODO
-        return null;
+        String id = generateId(nama, noHp);
+
+        return memberSystem.isMemberExist(id) ? null :
+        memberSystem.newMember(new Member(nama, id, password));
     }
 }

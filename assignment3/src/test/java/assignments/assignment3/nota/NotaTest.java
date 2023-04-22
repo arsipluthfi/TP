@@ -165,8 +165,8 @@ class NotaTest {
                 Paket : fast
                 Harga :
                 5 kg x 10000 = 50000
-                tanggal terima  : 01/04/2023
-                tanggal selesai : 03/04/2023
+                Tanggal Terima  : 01/04/2023
+                Tanggal Selesai : 03/04/2023
                 --- SERVICE LIST ---
                 -Cuci @ Rp.0
                 Harga Akhir: 50000
@@ -184,8 +184,8 @@ class NotaTest {
                 Paket : fast
                 Harga :
                 5 kg x 10000 = 50000
-                tanggal terima  : 01/04/2023
-                tanggal selesai : 03/04/2023
+                Tanggal Terima  : 01/04/2023
+                Tanggal Selesai : 03/04/2023
                 --- SERVICE LIST ---
                 -Cuci @ Rp.0
                 -Antar @ Rp.2500
@@ -209,8 +209,8 @@ class NotaTest {
                 Paket : fast
                 Harga :
                 5 kg x 10000 = 50000
-                tanggal terima  : 01/04/2023
-                tanggal selesai : 03/04/2023
+                Tanggal Terima  : 01/04/2023
+                Tanggal Selesai : 03/04/2023
                 --- SERVICE LIST ---
                 -Cuci @ Rp.0
                 -Antar @ Rp.2500

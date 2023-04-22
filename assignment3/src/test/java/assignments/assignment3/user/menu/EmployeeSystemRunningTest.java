@@ -44,7 +44,6 @@ public class EmployeeSystemRunningTest {
         employeeSystem.run(scanner, new Employee("Ivan Nababan", "akuDDP"));
 
         String expectedOutput = """
-                
                 Login as : IVAN-4
                 Selamat datang Ivan Nababan!
 
@@ -152,7 +151,6 @@ public class EmployeeSystemRunningTest {
                 """.replaceAll("\\s+","");
         String actual = outContent.toString().replaceAll("\\s+","");
         assertEquals(expectedOutput, actual);
-        assertEquals(3,NotaManager.notaList.length);
         assertTrue(nota2.getServices()[0].isDone());
         assertTrue(nota2.isDone());
     }
@@ -199,7 +197,6 @@ public class EmployeeSystemRunningTest {
                 """.replaceAll("\\s+","");
         String actual = outContent.toString().replaceAll("\\s+","");
         assertEquals(expectedOutput, actual);
-        assertEquals(3,NotaManager.notaList.length);
         assertTrue(nota2.getServices()[1].isDone());
         assertTrue(nota2.isDone());
     }

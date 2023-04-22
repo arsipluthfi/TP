@@ -1,109 +1,104 @@
 package assignments.assignment3.user.menu;
 
-import assignments.assignment3.user.Member;
+/*====================================***=====================================*\
+|---------------------------------- IMPORTS -----------------------------------|
+\*============================================================================*/
 
+import assignments.assignment3.user.Member;
 import java.util.Scanner;
 
+/*========================================================***=========================================================*\
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+
+|--------------------------------------------------- ABSTRACT CLASS ---------------------------------------------------|
+
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+\*====================================================================================================================*/
+
 public abstract class SystemCLI {
-    protected Member[] memberList = new Member[0];
+
+/*====================================***=====================================*\
+|---------------------------------- FIELDS ------------------------------------|
+\*============================================================================*/
+
+    protected Member[] memberList = new Member[1];
     protected Member loginMember;
     protected Scanner in;
 
-    /**
-     * Otentikasi pengguna dengan ID dan password yang diberikan dan memulai sesi pengguna.
-     * Akan berhenti jika logout atau ID / Password salah.
-     *
-     * @param in -> Scanner object untuk membaca input.
-     * @param inputId -> ID user yang akan diautentikasi.
-     * @param inputPassword -> password user yang akan diautentikasi.
-     */
+    protected abstract boolean processChoice(int choice);
+    protected abstract void displaySpecificMenu();
+
+/*====================================***=====================================*\
+|--------------------------------- IO METHODS ---------------------------------|
+\*============================================================================*/
+
+    public void outln(Object x) {                                               /* Shortcut untuk println statement   */
+        System.out.println(x);
+    }
+
+    public void outf(String format, Object... args) {                           /* Shortcut untuk printf statement    */
+        System.out.printf(format, args);
+    }
+
+    public void out(Object x) {                                                 /* Shorcut untuk print statement      */
+        System.out.print(x);
+    }
+
+    protected void displayMenu(){
+        outf(
+            "\nLogin as : %s\nSelamat datang %s!\n\n",
+            loginMember.getId(),
+            loginMember.getNama()
+        );
+
+        displaySpecificMenu();
+
+        out("Apa yang ingin Anda lakukan hari ini? ");
+    }
+
+/*====================================***=====================================*\
+|-------------------------------- FUNCTIONALITY -------------------------------|
+\*============================================================================*/
+
     public void login(Scanner in, String inputId, String inputPassword){
         Member authMember = authUser(inputId, inputPassword);
 
         if (authMember != null) {
             this.in = in;
-            System.out.println("Login successful!");
+            outln("Login successful!");
             run(in, authMember);
             return;
         }
 
-        System.out.println("Invalid ID or password.");
+        outln("Invalid ID or password.");
     };
 
-    /**
-     * Memulai sesi pengguna dan menangani input.
-     *
-     * @param in -> Scanner object untuk membaca input.
-     * @param member -> Member object yang menggunakan sistem.
-     */
     public void run(Scanner in, Member member){
         loginMember = member;
+
         boolean logout = false;
+
         while (!logout) {
             displayMenu();
-            int choice = in.nextInt();
-            in.nextLine();
-            logout = processChoice(choice);
+            logout = processChoice(Integer.parseInt(in.nextLine()));
         }
+
         loginMember = null;
-        System.out.println("Logging out...");
+        outln("Logging out...\n");
     }
 
-    /**
-     * Mengecek semua user dengan ID dan password yang diberikan.
-     *
-     * @param id -> ID pengguna yang akan diautentikasi.
-     * @param pass -> password pengguna untuk mengautentikasi.
-     * @return  Member object yang diautentikasi, null jika autentikasi gagal.
-     */
     public Member authUser(String id, String pass) {
-        for (Member user : memberList) {
-            if (!user.getId().equals(id)) {
-                continue;
-            }
-            if(user.login(id, pass)){
-                return user;
-            }
-            return null;
+        for (Member user : memberList) if (user != null) {
+            if (!user.getId().equals(id)) continue;
+            return user.login(id, pass) ? user : null;
         }
         return null;
     };
 
-    /**
-     * Memeriksa apakah ada Member dengan ID yang diberikan.
-     *
-     * @param id -> ID yang akan diperiksa.
-     * @return true jika ada member dengan ID yang diberikan, false jika tidak.
-     */
     public boolean isMemberExist(String id){
-        for (Member member:
-                memberList) {
-            if(member.getId().equals(id)){
-                return true;
-            }
+        for (Member member: memberList) if (member != null) {
+            if(member.getId().equals(id)) return true;
         }
         return false;
     }
-
-    /**
-     * Displays main menu untuk user yang menggunakan sistem.
-     */
-    protected void displayMenu(){
-        System.out.printf("\nLogin as : %s\nSelamat datang %s!\n\n", loginMember.getId(), loginMember.getNama());
-        displaySpecificMenu();
-        System.out.print("Apa yang ingin Anda lakukan hari ini? ");
-    }
-
-    /**
-     * Memproses pilihan dari pengguna yang menggunakan sistem sesuai dengan rolesnya.
-     *
-     * @param choice -> pilihan pengguna.
-     * @return true jika user log.
-     */
-    protected abstract boolean processChoice(int choice);
-
-    /**
-     * Displays specific menu sesuai class yang menginheritnya.
-     */
-    protected abstract void displaySpecificMenu();
 }

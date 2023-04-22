@@ -1,3 +1,17 @@
+/*========================================================***=========================================================*\
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+
+|----------------------------------------------- MAAF KALAU KOMENNYA NORAK --------------------------------------------|
+|------------------------------------------ BUTUH VISUAL BREAK BIAR TETAP WARAS ---------------------------------------|
+
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+\*====================================================================================================================*/
+
+
+/*====================================***=====================================*\
+|---------------------------------- IMPORTS -----------------------------------|
+\*============================================================================*/
+
 package assignments.assignment3;
 
 import assignments.assignment3.nota.NotaManager;
@@ -11,99 +25,156 @@ import java.util.Scanner;
 import static assignments.assignment3.nota.NotaManager.cal;
 import static assignments.assignment3.nota.NotaManager.fmt;
 
+/*========================================================***=========================================================*\
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+
+|------------------------------------------------------- CLASS -------------------------------------------------------|
+
+->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-><-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
+\*====================================================================================================================*/
+
 public class MainMenu {
+
+/*====================================***=====================================*\
+|---------------------------------- FIELDS ------------------------------------|
+\*============================================================================*/
+
     private final Scanner in;
     private final LoginManager loginManager;
 
-    /**
-     * Entry point for the CuciCuci System application.
-     *
-     * @param args command line arguments, bisa kalian ignore.
-     */
-    public static void main(String[] args) {
-        MainMenu mainMenu = new MainMenu(new Scanner(System.in), new LoginManager(new EmployeeSystem(), new MemberSystem()));
-        mainMenu.run();
-    }
+/*====================================***=====================================*\
+|--------------------------------- CONSTRUCTOR --------------------------------|
+\*============================================================================*/
 
     public MainMenu(Scanner in, LoginManager loginManager) {
         this.in = in;
         this.loginManager = loginManager;
     }
 
-    /**
-     * Menjalankan main menu.
-     */
+/*====================================***=====================================*\
+|--------------------------------- IO METHODS ---------------------------------|
+\*============================================================================*/
+
+    public void outln(Object x) {                                               /* Shortcut untuk println statement   */
+        System.out.println(x);
+    }
+
+    public void outf(String format, Object... args) {                           /* Shortcut untuk printf statement    */
+        System.out.printf(format, args);
+    }
+
+    public void out(Object x) {                                                 /* Shorcut untuk print statement      */
+        System.out.print(x);
+    }
+
+    public String inputNama() {                                                 /* Input nama                         */
+        outln("Masukkan nama Anda:");
+        return in.nextLine();
+    }
+
+    public String inputPassword() {                                             /* Input password                     */
+        out("Masukan password Anda: ");
+        return in.nextLine();
+    }
+
+    public String inputId() {                                                   /* Input id                           */
+        out("Masukan ID Anda: ");
+        return in.nextLine();
+    }
+
+    public String inputHp() {                                                   /* Input nomor hp                     */
+        String hp;
+
+        outln("Masukkan nomor handphone Anda:");
+        do {
+            hp = in.nextLine();
+
+            if (!hp.matches("[0-9]+")) {
+                outln("Nomor hp hanya menerima digit");
+            }
+
+        } while (!hp.matches("[0-9]+"));                                        /* Validasi input nomor hp            */
+
+        return hp;
+    }
+
+    private void displayMenu() {
+        outln("Selamat datang di CuciCuci System!");
+        outf("Sekarang tanggal %s\n", fmt.format(cal.getTime()));
+        outln("1. Login");
+        outln("2. Register Member");
+        outln("3. Tidur (Skip hari)");
+        outln("4. Exit");
+        out("Apa yang ingin Anda lakukan hari ini? ");
+    }
+
+/*====================================***=====================================*\
+|-------------------------------- FUNCTIONALITY -------------------------------|
+\*============================================================================*/
+
+    public static void main(String[] args) {
+        MainMenu mainMenu = new MainMenu(
+            new Scanner(System.in),
+            new LoginManager(
+                new EmployeeSystem(),
+                new MemberSystem()
+            )
+        );
+        mainMenu.run();
+    }
+
     public void run() {
-        boolean exit = false;
-        while (!exit) {
+        mainloop: while (true) {
             displayMenu();
-            int choice = in.nextInt();
-            in.nextLine();
-            switch (choice) {
-                case 1 -> login();
-                case 2 -> register();
-                case 3 -> toNextDay();
-                case 4 -> exit = true;
-                default -> System.out.println("Pilihan tidak valid, silakan coba lagi.");
+
+            switch (in.nextLine()) {
+                case "1" -> login();
+                case "2" -> register();
+                case "3" -> toNextDay();
+                case "4" -> {break mainloop;}
+                default -> outln("Pilihan tidak valid, silakan coba lagi.");
             }
         }
-
         in.close();
     }
 
-    /**
-     * Skips ke hari selanjutnya dan mengupdate sistem.
-     */
     private void toNextDay() {
-        System.out.println("Kamu tidur hari ini... zzz...");
+        outln("Kamu tidur hari ini... zzz...");
         NotaManager.toNextDay();
     }
 
-    /**
-     * Mendaftarkan user pada sistem.
-     */
     void register() {
-        System.out.println("Masukan nama Anda: ");
-        String nama = in.nextLine();
-        System.out.println("Masukan nomor handphone Anda: ");
-        String noHp = in.nextLine();
-        System.out.println("Masukan password Anda: ");
-        String password = in.nextLine();
+        String nama = inputNama();
+        String noHp = inputHp();
+        String password = inputPassword();
 
         Member registeredMember = loginManager.register(nama, noHp, password);
-        if(registeredMember == null){
-            System.out.printf("User dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
+
+        if (registeredMember == null) {
+            outf(
+                "User dengan nama %s dan nomor hp %s sudah ada!\n\n",
+                nama,
+                noHp
+            );
             return;
         }
-        System.out.printf("Berhasil membuat user dengan ID %s!\n", registeredMember.getId());
+
+        outf("Berhasil membuat user dengan ID %s!\n\n",
+            registeredMember.getId()
+        );
     }
 
-    /**
-     * Meminta user untuk login dan memulai SystemCLI yang sesuai.
-     */
     private void login() {
-        System.out.print("Masukan ID Anda: ");
-        String inputId = in.nextLine();
-        System.out.print("Masukan password Anda: ");
-        String inputPassword = in.nextLine();
-        SystemCLI systemCLI = loginManager.getSystem(inputId);
-        if(systemCLI == null){
-            System.out.println("ID atau password invalid.");
+        String id = inputId();
+        String password = inputPassword();
+
+        SystemCLI systemCLI = loginManager.getSystem(id);
+
+        if (systemCLI == null) {
+            outln("ID atau password invalid.");
             return;
         }
-        systemCLI.login(in, inputId, inputPassword);
-    }
 
-    /**
-     * Menampilkan menu
-     */
-    private void displayMenu() {
-        System.out.println("Selamat datang di CuciCuci System!");
-        System.out.printf("Sekarang tanggal %s\n", fmt.format(cal.getTime()));
-        System.out.println("1. Login");
-        System.out.println("2. Register Member");
-        System.out.println("3. Tidur (Skip hari)");
-        System.out.println("4. Exit");
-        System.out.print("Apa yang ingin Anda lakukan hari ini? ");
+        systemCLI.login(in, id, password);
     }
 }
