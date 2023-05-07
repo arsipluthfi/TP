@@ -23,7 +23,7 @@ public class NotaManager {
 
     public static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
     public static Calendar cal = Calendar.getInstance();
-    public static Nota[] notaList;
+    public static Nota[] notaList = new Nota[1];
 
 /*====================================***=====================================*\
 |-------------------------------- FUNCTIONALITY -------------------------------|
