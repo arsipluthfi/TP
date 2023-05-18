@@ -127,9 +127,21 @@ public class CreateNotaGUI extends JPanel {
 
     private void createNota() {
         if (validateItems()) {
+
+            int berat = Integer.parseInt(beratTextField.getText());
+            if (berat < 2) {
+                berat = 2;
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Berat kurang dari 2kg, namun terhitung 2kg...",
+                    "Minimum berat",
+                    JOptionPane.WARNING_MESSAGE
+                );
+            }
+
             Nota newNota = new Nota(
                 memberSystemGUI.getLoggedInMember(),
-                Integer.parseInt(beratTextField.getText()),
+                berat,
                 (String) paketComboBox.getSelectedItem(),
                 fmt.format(cal.getTime())
             );
@@ -144,6 +156,9 @@ public class CreateNotaGUI extends JPanel {
 
             memberSystemGUI.getLoggedInMember().addNota(newNota);
             NotaManager.addNota(newNota);
+
+            resetFields();
+
             MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
         }
     }

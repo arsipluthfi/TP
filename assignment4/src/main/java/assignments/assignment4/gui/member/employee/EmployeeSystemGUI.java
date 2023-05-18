@@ -49,7 +49,7 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         JTextArea textArea = new JTextArea(notaListString);
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        scrollPane.setPreferredSize(new Dimension(500, 300));
+        scrollPane.setPreferredSize(new Dimension(300, 300));
 
         JOptionPane.showMessageDialog(
             this,
@@ -63,13 +63,13 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         String notaStatusString = "";
 
         for (Nota nota: NotaManager.notaList) if (nota != null) {
-            notaStatusString += nota.kerjakan();
+            notaStatusString += "%s\n".formatted(nota.kerjakan());
         }
 
         JTextArea textArea = new JTextArea(notaStatusString);
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        scrollPane.setPreferredSize(new Dimension(500, 300));
+        scrollPane.setPreferredSize(new Dimension(300, 300));
 
         JOptionPane.showMessageDialog(
             this,
