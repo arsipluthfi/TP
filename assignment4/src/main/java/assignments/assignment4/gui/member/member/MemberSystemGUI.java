@@ -53,12 +53,12 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         JTextArea textArea = new JTextArea(notaListString);
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        scrollPane.setPreferredSize(new Dimension(300, 300));
+        scrollPane.setPreferredSize(new Dimension(500, 300));
 
         JOptionPane.showMessageDialog(
             this,
             scrollPane,
-            "NOTA Information",
+            "Nota Information",
             JOptionPane.PLAIN_MESSAGE
         );
     }

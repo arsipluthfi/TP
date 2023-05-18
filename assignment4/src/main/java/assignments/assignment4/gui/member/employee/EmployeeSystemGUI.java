@@ -43,25 +43,39 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         String notaListString = "";
 
         for (Nota nota : NotaManager.notaList) if (nota != null){
-            notaListString += "%s\n\n".formatted(nota.toString());
+            notaListString += "%s\n".formatted(nota.getNotaStatus());
         }
 
         JTextArea textArea = new JTextArea(notaListString);
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        scrollPane.setPreferredSize(new Dimension(300, 300));
+        scrollPane.setPreferredSize(new Dimension(500, 300));
 
         JOptionPane.showMessageDialog(
             this,
             scrollPane,
-            "NOTA Information",
+            "Nota Information",
             JOptionPane.PLAIN_MESSAGE
         );
     }
 
     private void cuci() {
+        String notaStatusString = "";
+
         for (Nota nota: NotaManager.notaList) if (nota != null) {
-            nota.kerjakan();
+            notaStatusString += nota.kerjakan();
         }
+
+        JTextArea textArea = new JTextArea(notaStatusString);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        scrollPane.setPreferredSize(new Dimension(500, 300));
+
+        JOptionPane.showMessageDialog(
+            this,
+            scrollPane,
+            "Nota Information",
+            JOptionPane.PLAIN_MESSAGE
+        );
     }
 }
