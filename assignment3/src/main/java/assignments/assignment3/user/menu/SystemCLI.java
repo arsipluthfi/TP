@@ -73,6 +73,10 @@ public abstract class SystemCLI {
         outln("Invalid ID or password.");
     };
 
+    public Member login(String inputId, String inputPassword){
+        return authUser(inputId, inputPassword);
+    };
+
     public void run(Scanner in, Member member){
         loginMember = member;
 

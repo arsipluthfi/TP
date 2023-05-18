@@ -7,6 +7,7 @@ import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class EmployeeSystemGUI extends AbstractMemberGUI {
@@ -22,46 +23,45 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         return KEY;
     }
 
-    /**
-     * Method ini mensupply buttons yang sesuai dengan requirements Employee.
-     * Button yang disediakan method ini BELUM memiliki ActionListener.
-     *
-     * @return Array of JButton, berisi button yang sudah stylize namun belum ada ActionListener.
-     * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
         return new JButton[]{
+            new JButton("It's nyuci time!"),
+            new JButton("Display list nota")
         };
     }
 
-    /**
-     * Method ini mensupply ActionListener korespondensi dengan button yang dibuat createButtons()
-     * sesuai dengan requirements MemberSystem.
-     *
-     * @return Array of ActionListener.
-     * */
     @Override
     protected ActionListener[] createActionListeners() {
         return new ActionListener[]{
-                e -> cuci(),
-                e -> displayNota(),
+            e -> cuci(),
+            e -> displayNota(),
         };
     }
 
-    /**
-     * Menampilkan semua Nota yang ada pada sistem.
-     * Akan dipanggil jika pengguna menekan button pertama pada createButtons
-     * */
     private void displayNota() {
-        // TODO
+        String notaListString = "";
+
+        for (Nota nota : NotaManager.notaList) if (nota != null){
+            notaListString += "%s\n\n".formatted(nota.toString());
+        }
+
+        JTextArea textArea = new JTextArea(notaListString);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        scrollPane.setPreferredSize(new Dimension(300, 300));
+
+        JOptionPane.showMessageDialog(
+            this,
+            scrollPane,
+            "NOTA Information",
+            JOptionPane.PLAIN_MESSAGE
+        );
     }
 
-    /**
-     * Menampilkan dan melakukan action mencuci.
-     * Akan dipanggil jika pengguna menekan button kedua pada createButtons
-     * */
     private void cuci() {
-        // TODO
+        for (Nota nota: NotaManager.notaList) if (nota != null) {
+            nota.kerjakan();
+        }
     }
 }

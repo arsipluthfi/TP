@@ -161,7 +161,7 @@ public class Nota {
         String result = "[ID Nota = %d]\n".formatted(id);
 
         result += generateNota(member.getId(), paket, berat, tanggalMasuk);
-        result += "--- SERVICE LIST ---\n";
+        result += "\n--- SERVICE LIST ---\n";
 
         for (LaundryService service : services) if (service != null) {
             result += "-%s @ Rp.%d\n".formatted(

@@ -4,18 +4,16 @@ import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.AntarService;
 import assignments.assignment3.nota.service.SetrikaService;
-import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class CreateNotaGUI extends JPanel {
     public static final String KEY = "CREATE_NOTA";
+    private JPanel mainPanel;
     private JLabel paketLabel;
     private JComboBox<String> paketComboBox;
     private JButton showPaketButton;
@@ -30,56 +28,149 @@ public class CreateNotaGUI extends JPanel {
     private final MemberSystemGUI memberSystemGUI;
 
     public CreateNotaGUI(MemberSystemGUI memberSystemGUI) {
+        super(new BorderLayout());
+
+        mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        initGUI();
+        add(mainPanel, BorderLayout.CENTER);
+
         this.memberSystemGUI = memberSystemGUI;
         this.fmt = NotaManager.fmt;
         this.cal = NotaManager.cal;
-
-        // Set up main panel, Feel free to make any changes
-        initGUI();
     }
 
-    /**
-     * Method untuk menginisialisasi GUI.
-     * Selama funsionalitas sesuai dengan soal, tidak apa apa tidak 100% sama.
-     * Be creative and have fun!
-     * */
     private void initGUI() {
-        // TODO
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+
+        paketLabel = new JLabel("Paket Laundry:");
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        mainPanel.add(paketLabel, constraints);
+
+        paketComboBox = new JComboBox<>(new String[] {
+            "Reguler",
+            "Fast",
+            "Express"
+        });
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        mainPanel.add(paketComboBox, constraints);
+
+        showPaketButton = new JButton("Show Paket");
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        mainPanel.add(showPaketButton, constraints);
+
+        beratLabel = new JLabel("Berat Cucian (Kg):");
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        mainPanel.add(beratLabel, constraints);
+
+        beratTextField = new JTextField();
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        mainPanel.add(beratTextField, constraints);
+
+        setrikaCheckBox = new JCheckBox(
+            "Tambah Setrika Service (1000/Kg)"
+        );
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        mainPanel.add(setrikaCheckBox, constraints);
+
+        antarCheckBox = new JCheckBox(
+            "Tambah Antar Service" +
+            "(2000/4Kg pertama, kemudian 500/Kg)"
+        );
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        mainPanel.add(antarCheckBox, constraints);
+
+        createNotaButton = new JButton("Buat Nota");
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 3;
+        mainPanel.add(createNotaButton, constraints);
+
+        backButton = new JButton("Kembali");
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        constraints.gridwidth = 3;
+        mainPanel.add(backButton, constraints);
+
+        showPaketButton.addActionListener(e -> showPaket());
+        createNotaButton.addActionListener(e -> createNota());
+        backButton.addActionListener(e -> handleBack());
     }
 
-    /**
-     * Menampilkan list paket pada user.
-     * Akan dipanggil jika pengguna menekan "showPaketButton"
-     * */
     private void showPaket() {
         String paketInfo = """
-                        <html><pre>
-                        +-------------Paket-------------+
-                        | Express | 1 Hari | 12000 / Kg |
-                        | Fast    | 2 Hari | 10000 / Kg |
-                        | Reguler | 3 Hari |  7000 / Kg |
-                        +-------------------------------+
-                        </pre></html>
-                        """;
+            \r+-------------Paket-------------+
+            \r| Express | 1 Hari | 12000 / Kg |
+            \r| Fast    | 2 Hari | 10000 / Kg |
+            \r| Reguler | 3 Hari |  7000 / Kg |
+            \r+-------------------------------+
+            """;
 
-        JLabel label = new JLabel(paketInfo);
+        JTextArea label = new JTextArea(paketInfo);
         label.setFont(new Font("monospaced", Font.PLAIN, 12));
-        JOptionPane.showMessageDialog(this, label, "Paket Information", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(
+            this,
+            label,
+            "Paket Information",
+            JOptionPane.PLAIN_MESSAGE
+        );
     }
 
-    /**
-     * Method untuk melakukan pengecekan input user dan mendaftarkan nota yang sudah valid pada sistem.
-     * Akan dipanggil jika pengguna menekan "createNotaButton"
-     * */
     private void createNota() {
-        // TODO
+        if (validateItems()) {
+            Nota newNota = new Nota(
+                memberSystemGUI.getLoggedInMember(),
+                Integer.parseInt(beratTextField.getText()),
+                (String) paketComboBox.getSelectedItem(),
+                fmt.format(cal.getTime())
+            );
+
+            if (setrikaCheckBox.isSelected()) {
+                newNota.addService(new SetrikaService());
+            }
+
+            if (antarCheckBox.isSelected()) {
+                newNota.addService(new AntarService());
+            }
+
+            memberSystemGUI.getLoggedInMember().addNota(newNota);
+            NotaManager.addNota(newNota);
+            MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+        }
     }
 
-    /**
-     * Method untuk kembali ke halaman home.
-     * Akan dipanggil jika pengguna menekan "backButton"
-     * */
     private void handleBack() {
-        // TODO
+        resetFields();
+        MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+    }
+
+    private void resetFields() {
+        paketComboBox.setSelectedIndex(0);
+        beratTextField.setText("");
+        setrikaCheckBox.setSelected(false);
+        antarCheckBox.setSelected(false);
+    }
+
+    private boolean validateItems() {
+        if (!beratTextField.getText().matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Tolong input berat berbentuk angka",
+                "Input Error",
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            return false;
+        }
+        return true;
     }
 }

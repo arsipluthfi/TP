@@ -50,6 +50,31 @@ public class EmployeeSystem extends SystemCLI {
 |-------------------------------- FUNCTIONALITY -------------------------------|
 \*============================================================================*/
 
+    public void addEmployee(Employee[] employees) {
+        for (Employee employee : employees) {
+            addEmployee(employee);
+        }
+    }
+
+    public void addEmployee(Employee employee) {
+        Member[] newArray;
+        int idx;
+
+        if (memberList[memberList.length - 1] != null) {                        /* Kalau sudah penuh                  */
+            newArray = new Employee[memberList.length * 2];                     /* Create new array twice the size */
+        } else {
+            newArray = new Employee[memberList.length];
+        }
+
+        for (idx = 0; idx < memberList.length; idx++) {                         /* Copy arrays                        */
+            if (memberList[idx] == null) break;
+            newArray[idx] = memberList[idx];                                    /* Inserting values                   */
+        }
+
+        newArray[idx] = employee;                                               /* Adding the new element             */
+        memberList = newArray;
+    }
+
     @Override
     protected boolean processChoice(int choice) {
         boolean logout = false;
