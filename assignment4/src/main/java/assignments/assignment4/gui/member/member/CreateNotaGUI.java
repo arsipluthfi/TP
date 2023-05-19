@@ -1,6 +1,6 @@
 package assignments.assignment4.gui.member.member;
 
-import assignments.assignment3.nota.Nota;
+import assignments.assignment3.nota.Nota;                                       /* Import project files               */
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.AntarService;
 import assignments.assignment3.nota.service.SetrikaService;
@@ -11,9 +11,9 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class CreateNotaGUI extends JPanel {
-    public static final String KEY = "CREATE_NOTA";
-    private JPanel mainPanel;
+public class CreateNotaGUI extends JPanel {                                     /* Page to create nota                */
+    public static final String KEY = "CREATE_NOTA";                             /* Key to access the page             */
+    private JPanel mainPanel;                                                   /* Widgets                            */
     private JLabel paketLabel;
     private JComboBox<String> paketComboBox;
     private JButton showPaketButton;
@@ -23,11 +23,11 @@ public class CreateNotaGUI extends JPanel {
     private JCheckBox antarCheckBox;
     private JButton createNotaButton;
     private JButton backButton;
-    private final SimpleDateFormat fmt;
+    private final SimpleDateFormat fmt;                                         /* Calendar formatting                */
     private final Calendar cal;
-    private final MemberSystemGUI memberSystemGUI;
+    private final MemberSystemGUI memberSystemGUI;                              /* To get the logged in member        */
 
-    public CreateNotaGUI(MemberSystemGUI memberSystemGUI) {
+    public CreateNotaGUI(MemberSystemGUI memberSystemGUI) {                     /* to create an instance              */
         super(new BorderLayout());
 
         mainPanel = new JPanel(new GridBagLayout());
@@ -42,7 +42,7 @@ public class CreateNotaGUI extends JPanel {
     }
 
     private void initGUI() {
-        GridBagConstraints constraints = new GridBagConstraints();
+        GridBagConstraints constraints = new GridBagConstraints();              /* Creating and placing widgets       */
         constraints.fill = GridBagConstraints.BOTH;
 
         paketLabel = new JLabel("Paket Laundry:");
@@ -101,12 +101,12 @@ public class CreateNotaGUI extends JPanel {
         constraints.gridwidth = 3;
         mainPanel.add(backButton, constraints);
 
-        showPaketButton.addActionListener(e -> showPaket());
+        showPaketButton.addActionListener(e -> showPaket());                    /* Assigning listeners                */
         createNotaButton.addActionListener(e -> createNota());
         backButton.addActionListener(e -> handleBack());
     }
 
-    private void showPaket() {
+    private void showPaket() {                                                  /* Displaying pakey options           */
         String paketInfo = """
             \r+-------------Paket-------------+
             \r| Express | 1 Hari | 12000 / Kg |
@@ -125,7 +125,7 @@ public class CreateNotaGUI extends JPanel {
         );
     }
 
-    private void createNota() {
+    private void createNota() {                                                 /* validates and displays new nota    */
         if (validateItems()) {
 
             int berat = Integer.parseInt(beratTextField.getText());
@@ -159,23 +159,23 @@ public class CreateNotaGUI extends JPanel {
 
             resetFields();
 
-            MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+            MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);            /* goes back to member page           */
         }
     }
 
-    private void handleBack() {
+    private void handleBack() {                                                 /* goes back to member page           */
         resetFields();
         MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
     }
 
-    private void resetFields() {
+    private void resetFields() {                                                /* Resets the text fields and boxes   */
         paketComboBox.setSelectedIndex(0);
         beratTextField.setText("");
         setrikaCheckBox.setSelected(false);
         antarCheckBox.setSelected(false);
     }
 
-    private boolean validateItems() {
+    private boolean validateItems() {                                           /* validates user input               */
         if (!beratTextField.getText().matches("[0-9]+")) {
             JOptionPane.showMessageDialog(
                 this,

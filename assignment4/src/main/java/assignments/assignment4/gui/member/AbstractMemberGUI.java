@@ -14,7 +14,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable {   
     protected Member loggedInMember;
     private final SystemCLI systemCLI;
 
-    public AbstractMemberGUI(SystemCLI systemCLI) {
+    public AbstractMemberGUI(SystemCLI systemCLI) {                             /* not for creating an instance       */
         super(new BorderLayout());
         this.systemCLI = systemCLI;
 
@@ -29,7 +29,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable {   
         add(buttonsPanel, BorderLayout.CENTER);
     }
 
-    protected JPanel initializeButtons() {
+    protected JPanel initializeButtons() {                                      /* creating and assigning buttons     */
         JButton[] buttons = createButtons();
         ActionListener[] listeners = createActionListeners();
 
@@ -61,7 +61,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable {   
         return buttonsPanel;
     }
 
-    public boolean login(String id, String password) {
+    public boolean login(String id, String password) {                          /* validate user login credentials    */
         loggedInMember = systemCLI.login(id, password);
 
         if (loggedInMember != null) {
@@ -81,6 +81,6 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable {   
         loggedInMember = null;
     }
 
-    protected abstract JButton[] createButtons();
+    protected abstract JButton[] createButtons();                               /* Implemented in its subclasses      */
     protected abstract ActionListener[] createActionListeners();
 }

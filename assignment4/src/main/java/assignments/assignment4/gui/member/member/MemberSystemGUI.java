@@ -1,6 +1,6 @@
 package assignments.assignment4.gui.member.member;
 
-import assignments.assignment3.nota.Nota;
+import assignments.assignment3.nota.Nota;                                       /* Import project files               */
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment4.MainFrame;
@@ -11,15 +11,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class MemberSystemGUI extends AbstractMemberGUI {
+public class MemberSystemGUI extends AbstractMemberGUI {                        /* page for members                   */
     public static final String KEY = "MEMBER";
 
-    public MemberSystemGUI(MemberSystem memberSystem) {
+    public MemberSystemGUI(MemberSystem memberSystem) {                         /* to create an instance              */
         super(memberSystem);
     }
 
     @Override
-    public String getPageName(){
+    public String getPageName(){                                                /* Getters                            */
         return KEY;
     }
 
@@ -28,7 +28,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
     }
 
     @Override
-    protected JButton[] createButtons() {
+    protected JButton[] createButtons() {                                       /* creating widgets                   */
         return new JButton[]{
             new JButton("Saya ingin laundry"),
             new JButton("Lihat detail nota saya")
@@ -36,14 +36,14 @@ public class MemberSystemGUI extends AbstractMemberGUI {
     }
 
     @Override
-    protected ActionListener[] createActionListeners() {
+    protected ActionListener[] createActionListeners() {                        /* Creating listeners                 */
         return new ActionListener[] {
             e -> createNota(),
             e -> showDetailNota(),
         };
     }
 
-    private void showDetailNota() {
+    private void showDetailNota() {                                             /* displays nota list                 */
         String notaListString = "";
 
         for (Nota nota : loggedInMember.getNotaList()) if (nota != null){
@@ -63,7 +63,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         );
     }
 
-    private void createNota() {
+    private void createNota() {                                                 /* Goes to the create nota page       */
         MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
     }
 
