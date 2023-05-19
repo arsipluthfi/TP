@@ -5,9 +5,9 @@ import assignments.assignment4.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 
-public class LoginGUI extends JPanel {
+public class LoginGUI extends JPanel {                                          /* Page to log in as users            */
     public static final String KEY = "LOGIN";
-    private JPanel mainPanel;
+    private JPanel mainPanel;                                                   /* widgets                            */
     private JLabel idLabel;
     private JTextField idTextField;
     private JLabel passwordLabel;
@@ -15,7 +15,7 @@ public class LoginGUI extends JPanel {
     private JButton loginButton;
     private JButton backButton;
 
-    public LoginGUI() {
+    public LoginGUI() {                                                         /* creating the page                  */
         super(new BorderLayout());
 
         mainPanel = new JPanel(new GridBagLayout());
@@ -25,7 +25,7 @@ public class LoginGUI extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
     }
 
-    private void initGUI() {
+    private void initGUI() {                                                    /* Creating and placing widgets       */
 
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -61,16 +61,16 @@ public class LoginGUI extends JPanel {
         constraints.weighty = 0.5;
         mainPanel.add(backButton, constraints);
 
-        loginButton.addActionListener(e -> handleLogin());
+        loginButton.addActionListener(e -> handleLogin());                      /* Adding the listeners               */
         backButton.addActionListener(e -> handleBack());
     }
 
-    private void handleBack() {
+    private void handleBack() {                                                 /* going back to the home page        */
         resetFields();
         MainFrame.getInstance().navigateTo(HomeGUI.KEY);
     }
 
-    private void handleLogin() {
+    private void handleLogin() {                                                /* validates login credentials        */
         String password = String.valueOf(passwordField.getPassword());
 
         if (!MainFrame.getInstance().login(idTextField.getText(), password)) {
@@ -85,7 +85,7 @@ public class LoginGUI extends JPanel {
         resetFields();
     }
 
-    private void resetFields() {
+    private void resetFields() {                                                /* Empties out the text fields        */
         idTextField.setText("");
         passwordField.setText("");
     }

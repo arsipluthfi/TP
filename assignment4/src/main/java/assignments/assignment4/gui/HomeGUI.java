@@ -1,6 +1,6 @@
 package assignments.assignment4.gui;
 
-import assignments.assignment3.nota.NotaManager;
+import assignments.assignment3.nota.NotaManager;                                /* Imports project files              */
 import assignments.assignment4.MainFrame;
 
 import javax.swing.*;
@@ -9,15 +9,15 @@ import java.awt.*;
 import static assignments.assignment3.nota.NotaManager.toNextDay;
 
 public class HomeGUI extends JPanel {
-    public static final String KEY = "HOME";
-    private JLabel titleLabel;
+    public static final String KEY = "HOME";                                    /* the code to go to this page        */
+    private JLabel titleLabel;                                                  /* widgets                            */
     private JLabel dateLabel;
     private JPanel mainPanel;
     private JButton loginButton;
     private JButton registerButton;
     private JButton toNextDayButton;
 
-    public HomeGUI(){
+    public HomeGUI(){                                                           /* Creates the page                   */
         super(new BorderLayout());
 
         mainPanel = new JPanel(new GridBagLayout());
@@ -27,7 +27,7 @@ public class HomeGUI extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
     }
 
-    private void initGUI() {
+    private void initGUI() {                                                    /* Creating and placing widgets       */
 
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -56,20 +56,20 @@ public class HomeGUI extends JPanel {
         constraints.weighty = 0;
         mainPanel.add(dateLabel, constraints);
 
-        loginButton.addActionListener(e -> handleToLogin());
+        loginButton.addActionListener(e -> handleToLogin());                    /* Adds the listener                  */
         registerButton.addActionListener(e -> handleToRegister());
         toNextDayButton.addActionListener(e -> handleNextDay());
     }
 
-    private static void handleToRegister() {
+    private static void handleToRegister() {                                    /* Opens the register page            */
         MainFrame.getInstance().navigateTo(RegisterGUI.KEY);
     }
 
-    private static void handleToLogin() {
+    private static void handleToLogin() {                                       /* Opens the login page               */
         MainFrame.getInstance().navigateTo(LoginGUI.KEY);
     }
 
-    private void handleNextDay() {
+    private void handleNextDay() {                                              /* Goes to the next day               */
         toNextDay();
 
         dateLabel.setText("Hari ini: %s".formatted(

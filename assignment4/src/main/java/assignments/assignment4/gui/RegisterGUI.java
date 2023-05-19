@@ -1,15 +1,15 @@
 package assignments.assignment4.gui;
 
-import assignments.assignment3.LoginManager;
+import assignments.assignment3.LoginManager;                                    /* Imports project files              */
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class RegisterGUI extends JPanel {
-    public static final String KEY = "REGISTER";
-    private JPanel mainPanel;
+public class RegisterGUI extends JPanel {                                       /* Page for registering user          */
+    public static final String KEY = "REGISTER";                                /* Key to go to this page             */
+    private JPanel mainPanel;                                                   /* Widgets                            */
     private JLabel nameLabel;
     private JTextField nameTextField;
     private JLabel phoneLabel;
@@ -31,7 +31,7 @@ public class RegisterGUI extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
     }
 
-    private void initGUI() {
+    private void initGUI() {                                                    /* Creating and placing widgets       */
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
@@ -75,16 +75,16 @@ public class RegisterGUI extends JPanel {
         constraints.weighty = 0.5;
         mainPanel.add(backButton, constraints);
 
-        registerButton.addActionListener(e -> handleRegister());
+        registerButton.addActionListener(e -> handleRegister());                /* Adds listener                      */
         backButton.addActionListener(e -> handleBack());
     }
 
-    private void handleBack() {
+    private void handleBack() {                                                 /* going back to the home page        */
         resetFields();
         MainFrame.getInstance().navigateTo(HomeGUI.KEY);
     }
 
-    private void handleRegister() {
+    private void handleRegister() {                                             /* if the user presses register       */
         String password = String.valueOf(passwordField.getPassword());
 
         if (nameTextField.getText().equals("")) {
@@ -117,13 +117,13 @@ public class RegisterGUI extends JPanel {
         resetFields();
     }
 
-    private void resetFields() {
+    private void resetFields() {                                                /* Empty out the fields               */
         nameTextField.setText("");
         phoneTextField.setText("");
         passwordField.setText("");
     }
 
-    private void errorMessage(String message) {
+    private void errorMessage(String message) {                                 /* Abstracts error message            */
         JOptionPane.showMessageDialog(
             this,
             message,

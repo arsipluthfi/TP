@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public abstract class AbstractMemberGUI extends JPanel implements Loginable {
+public abstract class AbstractMemberGUI extends JPanel implements Loginable {   /* member ui abstraction              */
     private JLabel welcomeLabel;
     private JLabel loggedInAsLabel;
     protected Member loggedInMember;
