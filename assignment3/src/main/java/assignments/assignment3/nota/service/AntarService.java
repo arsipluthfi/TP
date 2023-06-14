@@ -1,6 +1,6 @@
 package assignments.assignment3.nota.service;
 
-public class AntarService implements LaundryService{
+public class AntarService implements LaundryService {
 
     private boolean isDone;
 
@@ -16,7 +16,7 @@ public class AntarService implements LaundryService{
     }
 
     @Override
-    public long getHarga(int berat) {
+    public long getHarga(int berat) {                                           /* buat cek kalo belum 4              */
         return 2000 + (500 * (((berat - 4) >>> 31 ^ 1) == 0 ? 0 : berat - 4));  /* Bit twiddling magic                */
     }
 

@@ -1,6 +1,6 @@
 package assignments.assignment3.nota.service;
 
-public class SetrikaService implements LaundryService{
+public class SetrikaService implements LaundryService {
 
     private boolean isDone;
 
