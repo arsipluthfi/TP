@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame {
 
     private static MainFrame instance;                                          /* Widgets and instances              */
     private final Loginable[] loginablePanel;
